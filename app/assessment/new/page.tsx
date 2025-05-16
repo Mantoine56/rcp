@@ -303,7 +303,7 @@ export default function NewAssessment() {
             
             {/* Step 2: Risk Assessment */}
             <StepperItem 
-              step={1} 
+              step={2} 
               disabled={true}
               className="[&:not(:last-child)]:flex-1"
               aria-label="Risk Assessment"
@@ -319,7 +319,7 @@ export default function NewAssessment() {
             
             {/* Step 3: Controls Assessment */}
             <StepperItem 
-              step={2}
+              step={3}
               disabled={true}
               className="[&:not(:last-child)]:flex-1"
               aria-label="Controls Assessment"
@@ -335,7 +335,7 @@ export default function NewAssessment() {
             
             {/* Step 4: Review & Submit */}
             <StepperItem 
-              step={3}
+              step={4}
               disabled={true}
               className="flex-1"
               aria-label="Review and Submit"
