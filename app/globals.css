@@ -692,7 +692,7 @@ li {
 /* Primary button variant (default) */
 .gc-button-primary {
   background-color: var(--gc-blue);
-  color: var(--text-inverse);
+  color: var(--text-inverse) !important;
   border: 2px solid var(--gc-blue);
 }
 
@@ -700,6 +700,7 @@ li {
 .gc-button-primary:focus {
   background-color: var(--gc-nav-blue);
   border-color: var(--gc-nav-blue);
+  color: var(--text-inverse) !important;
 }
 
 /* Secondary button variant */
@@ -727,7 +728,7 @@ li {
 /* Danger/Destructive button variant */
 .gc-button-danger {
   background-color: var(--text-error);
-  color: var(--text-inverse);
+  color: var(--text-inverse) !important;
   border: 2px solid var(--text-error);
 }
 
@@ -735,6 +736,7 @@ li {
 .gc-button-danger:focus {
   background-color: #A50C10;
   border-color: #A50C10;
+  color: var(--text-inverse) !important;
 }
 
 /* Secondary danger button variant */
@@ -749,6 +751,18 @@ li {
   background-color: #FBECEC;
   color: #A50C10;
   border-color: #A50C10;
+}
+
+/* Ensure continue-assessment buttons always have white text */
+[class*="continue-assessment"] {
+  color: var(--text-inverse) !important;
+}
+
+[class*="continue-assessment"]:hover,
+[class*="continue-assessment"]:focus,
+[class*="continue-assessment"]:active {
+  color: var(--text-inverse) !important;
+  text-decoration: none !important;
 }
 
 /* Button sizes */
