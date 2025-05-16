@@ -86,7 +86,6 @@ function QuestionRenderer({
             onChange={(value) => onChange(question.id, value)}
             required={question.required}
             disabled={disabled}
-            // Add the question text and guidance as a wrapper for accessibility
             aria-label={`${question.number}. ${question.text}`}
           />
         );
@@ -162,13 +161,28 @@ function QuestionRenderer({
   };
   
   return (
-    <div className={`mb-8 ${className}`}>
+    <div className={className}>
+      {/* Display question number and text */}
+      <div className="mb-4">
+        <h3 className="text-lg font-medium mb-2">
+          <span className="font-semibold">{question.number}.</span> {question.text}
+        </h3>
+        
+        {/* Display guidance if available */}
+        {question.guidance && (
+          <p className="text-sm text-gray-600 italic mb-3">
+            {question.guidance}
+          </p>
+        )}
+      </div>
+      
+      {/* Render the question input controls */}
       {renderQuestionByType()}
       
-      {/* Show assignment information if assigned */}
+      {/* Show assignment information if available */}
       {assignment && (
-        <div className="mt-4 text-sm text-gray-600">
-          <span className="font-semibold">Assigned to:</span> {getAssigneeInfo()}
+        <div className="mt-3 text-sm text-gray-500">
+          <span>Assigned to: {getAssigneeInfo()}</span>
         </div>
       )}
     </div>
