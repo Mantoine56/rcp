@@ -12,6 +12,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "@/lib/i18n";
+import Details from "@/components/wet/Details";
 
 /**
  * Sample draft assessments (would normally come from the database)
@@ -26,26 +27,26 @@ const dummyDrafts = [
  * Displays welcome message and assessment options
  */
 export default function Home() {
-  // In a client component, we would use the useTranslation hook
-  // For server component, we'll demonstrate the structure but without the hook functionality
-  // const { t, language } = useTranslation();
+  // Access the translation system using the useTranslation hook
+  // This provides access to current language and translation function
+  const { t, language } = useTranslation();
   
   return (
     <>
-      {/* Page header with gray background area - matching GC Design System */}
-      <div className="bg-[#F5F5F5] w-full border-b border-[#CCCCCC] mb-8">
+      {/* Page header with clean white background for better cohesiveness */}
+      <div className="w-full border-b border-[#CCCCCC] mb-8 bg-white">
         <div className="max-w-4xl mx-auto px-4 py-6">
           <h1 className="text-2xl md:text-3xl font-bold mb-4 text-gc-blue">
-            Risk & Compliance Self-Assessment Portal
+            {t('app.subtitle')}
           </h1>
           
-          <div className="bg-[#FFFCEA] p-5 border-l-4 border-[#EE7100] mb-0">
+          {/* Notice box with improved styling - softer colors and modern shadow */}
+          <div className="bg-blue-50 p-5 border-l-4 border-gc-blue rounded shadow-sm mb-0">
             <p className="mb-2">
-              <strong>Version:</strong> GC-RCP Lite (MVP 1)
+              <strong>{t('app.version')}:</strong> GC-RCP Lite (MVP 1)
             </p>
-            <p>
-              This portal allows Department Coordinators to complete the Treasury Board Secretariat (TBS) 
-              Risk & Compliance Process assessment digitally, replacing the previous 60-page Word workbook.
+            <p className="text-gc-dark-text">
+              {t('app.description')}
             </p>
           </div>
         </div>
@@ -54,141 +55,167 @@ export default function Home() {
       {/* Main content area */}
       <div className="max-w-4xl mx-auto px-4">
 
-      {/* Action cards */}
+      {/* Action cards with improved alignment and consistent heights */}
       <div className="grid md:grid-cols-2 gap-6 mb-10">
         {/* New Assessment Card */}
-        <div className="border border-gray-300 rounded bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-4 text-gc-blue">
-            New Assessment
-          </h2>
-          <p className="mb-6">
-            Start a new Risk & Compliance Self-Assessment for your department.
-          </p>
-          <div className="flex justify-end">
+        <div className="border border-gray-300 rounded bg-white p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+          <div className="flex-grow">
+            <h2 className="text-xl font-semibold mb-4 text-gc-blue">
+              {t('home.newAssessment')}
+            </h2>
+            <p className="mb-6 text-gc-dark-text">
+              {t('home.newAssessment.description')}
+            </p>
+          </div>
+          <div className="mt-auto pt-4 flex justify-end">
             <Link 
               href="/assessment/new"
-              className="gc-button gc-button-primary" 
-              /* Explicitly adding primary class for consistency with GC Design System */
+              className="gc-button gc-button-primary inline-block px-6 py-2 rounded" 
+              /* Added explicit styling for better visual consistency */
               aria-label="Start a new risk and compliance assessment"
             >
-              Start New Assessment
+              {t('home.newAssessment.button')}
             </Link>
           </div>
         </div>
 
         {/* Continue Draft Card */}
-        <div className="border border-gray-300 rounded bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-          <h2 className="text-xl font-semibold mb-4 text-gc-blue">
-            Continue Draft
-          </h2>
-          
-          {dummyDrafts.length > 0 ? (
-            <>
-              <p className="mb-4 text-gc-dark-text">
-                You have a draft assessment in progress. Continue where you left off.
-              </p>
-              <table className="w-full mb-4 text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-2">Fiscal Year</th>
-                    <th className="text-left py-2">Last Updated</th>
-                    <th className="text-left py-2">Progress</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {dummyDrafts.map(draft => (
-                    <tr key={draft.id} className="border-b">
-                      <td className="py-2">{draft.fiscalYear}</td>
-                      <td className="py-2">{draft.updatedAt}</td>
-                      <td className="py-2">Step {draft.currentStep} of 4</td>
+        <div className="border border-gray-300 rounded bg-white p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+          <div className="flex-grow">
+            <h2 className="text-xl font-semibold mb-4 text-gc-blue">
+              {t('home.continueDraft')}
+            </h2>
+            
+            {dummyDrafts.length > 0 ? (
+              <>
+                <p className="mb-4 text-gc-dark-text">
+                  {t('home.continueDraft.description')}
+                </p>
+                <table className="w-full mb-4 text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-2">{t('home.table.fiscalYear')}</th>
+                      <th className="text-left py-2">{t('home.table.lastUpdated')}</th>
+                      <th className="text-left py-2">{t('home.table.progress')}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className="flex justify-end">
-                <Link 
-                  href={`/assessment/${dummyDrafts[0].id}`}
-                  className="gc-button gc-button-primary"
-                  /* Explicitly adding primary class for consistency with GC Design System */
-                  aria-label="Continue working on your draft assessment"
-                >
-                  Continue Draft
-                </Link>
-              </div>
-            </>
-          ) : (
-            <>
+                  </thead>
+                  <tbody>
+                    {dummyDrafts.map(draft => (
+                      <tr key={draft.id} className="border-b">
+                        <td className="py-2">{draft.fiscalYear}</td>
+                        <td className="py-2">{draft.updatedAt}</td>
+                        <td className="py-2">{t('home.table.stepOf', { current: draft.currentStep.toString(), total: '4' })}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            ) : (
               <p className="mb-6 text-gc-dark-text">
-                You don't have any draft assessments. Start a new assessment to begin.
+                {t('home.noDrafts')}
               </p>
-              <div className="flex justify-end">
-                <span className="gc-button-secondary opacity-50 cursor-not-allowed" aria-disabled="true">
-                  No Drafts Available
-                </span>
-              </div>
-            </>
-          )}
+            )}
+          </div>
+          <div className="mt-auto pt-4 flex justify-end">
+            {dummyDrafts.length > 0 ? (
+              <Link 
+                href={`/assessment/${dummyDrafts[0].id}`}
+                className="gc-button gc-button-primary inline-block px-6 py-2 rounded"
+                /* Added explicit styling for better visual consistency */
+                aria-label="Continue working on your draft assessment"
+              >
+                {t('home.continueDraft.button')}
+              </Link>
+            ) : (
+              <span className="gc-button-secondary opacity-50 cursor-not-allowed inline-block px-6 py-2 rounded" aria-disabled="true">
+                {t('home.noDrafts.button')}
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Key Benefits */}
+      {/* Key Benefits - Using GCDS Details Component */}
       <div className="mb-10">
         <h2 className="text-xl font-semibold mb-4 border-b pb-2 text-gc-blue">
-          Key Benefits
+          {t('home.keyBenefits')}
         </h2>
         
-        <ul className="list-disc pl-6 space-y-2">
-          <li>
-            <strong>Instant Calculations:</strong> Flags, maturity scores, and residual risks are calculated automatically
-          </li>
-          <li>
-            <strong>Save & Resume:</strong> Draft capability allows you to save progress and resume later
-          </li>
-          <li>
-            <strong>Visual Workflow:</strong> Sliding overview lets you see progress through all assessment steps
-          </li>
-          <li>
-            <strong>Standard Output:</strong> Produces a Deputy-Head-ready PDF in the same format as the Word template
-          </li>
-        </ul>
+        {/* 
+          Details component for Key Benefits
+          - Provides expandable/collapsible view of the benefits
+          - Improves user experience by organizing information
+          - Follows accessibility guidelines with proper labeling
+        */}
+        <Details 
+          summary={t('home.keyBenefits.summary')}
+          id="key-benefits-details"
+        >
+          <ul className="list-disc pl-6 space-y-2 mt-4">
+            <li>
+              {t('home.keyBenefits.calculations')}
+            </li>
+            <li>
+              {t('home.keyBenefits.save')}
+            </li>
+            <li>
+              {t('home.keyBenefits.workflow')}
+            </li>
+            <li>
+              {t('home.keyBenefits.output')}
+            </li>
+          </ul>
+        </Details>
       </div>
 
-      {/* Process Steps */}
+      {/* Process Steps - Using GCDS Details Component */}
       <div>
         <h2 className="text-xl font-semibold mb-4 border-b pb-2 text-gc-blue">
-          Assessment Process
+          {t('home.assessmentProcess')}
         </h2>
         
-        <ol className="relative border-l border-gc-light-blue ml-3 space-y-6 pb-6">
-          <li className="mb-6 ml-6">
-            <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
-            <h3 className="font-semibold text-lg">Answer Questions</h3>
-            <p className="text-gc-dark-text">
-              Complete the assessment questions across all 11 areas of focus
-            </p>
-          </li>
-          <li className="mb-6 ml-6">
-            <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
-            <h3 className="font-semibold text-lg">Review Flags</h3>
-            <p className="text-gc-dark-text">
-              Review compliance flags and average maturity scores by area
-            </p>
-          </li>
-          <li className="mb-6 ml-6">
-            <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
-            <h3 className="font-semibold text-lg">Enter Risks</h3>
-            <p className="text-gc-dark-text">
-              Document corporate and area-specific risks in the risk register
-            </p>
-          </li>
-          <li className="ml-6">
-            <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
-            <h3 className="font-semibold text-lg">Export PDF</h3>
-            <p className="text-gc-dark-text">
-              Generate bilingual PDF report for Deputy Head review
-            </p>
-          </li>
-        </ol>
+        {/* 
+          Details component for Assessment Process
+          - Provides expandable/collapsible view of the process steps
+          - Improves user experience by providing information on demand
+          - Follows accessibility guidelines with proper labeling
+        */}
+        <Details 
+          summary={t('home.assessmentProcess.summary')} 
+          id="assessment-process-details"
+          open={true} // Open by default to highlight the process steps
+        >
+          <ol className="relative border-l border-gc-light-blue ml-3 space-y-6 pb-6 mt-4">
+            <li className="mb-6 ml-6">
+              <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
+              <h3 className="font-semibold text-lg">{t('home.assessmentProcess.step1.title')}</h3>
+              <p className="text-gc-dark-text">
+                {t('home.assessmentProcess.step1.description')}
+              </p>
+            </li>
+            <li className="mb-6 ml-6">
+              <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
+              <h3 className="font-semibold text-lg">{t('home.assessmentProcess.step2.title')}</h3>
+              <p className="text-gc-dark-text">
+                {t('home.assessmentProcess.step2.description')}
+              </p>
+            </li>
+            <li className="mb-6 ml-6">
+              <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
+              <h3 className="font-semibold text-lg">{t('home.assessmentProcess.step3.title')}</h3>
+              <p className="text-gc-dark-text">
+                {t('home.assessmentProcess.step3.description')}
+              </p>
+            </li>
+            <li className="ml-6">
+              <div className="absolute w-4 h-4 bg-gc-light-blue rounded-full -left-2"></div>
+              <h3 className="font-semibold text-lg">{t('home.assessmentProcess.step4.title')}</h3>
+              <p className="text-gc-dark-text">
+                {t('home.assessmentProcess.step4.description')}
+              </p>
+            </li>
+          </ol>
+        </Details>
       </div>
 
       {/* Developer comments (these won't appear in the UI) */}

@@ -76,6 +76,128 @@ export const translations: Record<string, TranslatedContent> = {
     en: 'Risk & Compliance Self-Assessment Portal',
     fr: 'Portail d\'auto-évaluation des risques et de la conformité',
   },
+  'app.version': {
+    en: 'Version',
+    fr: 'Version',
+  },
+  'app.description': {
+    en: 'This portal allows Department Coordinators to complete the Treasury Board Secretariat (TBS) Risk & Compliance Process assessment digitally, replacing the previous 60-page Word workbook.',
+    fr: 'Ce portail permet aux coordonnateurs ministériels de compléter l\'évaluation du processus de risques et de conformité du Secrétariat du Conseil du Trésor (SCT) de façon numérique, remplaçant l\'ancien cahier de travail Word de 60 pages.',
+  },
+  
+  // Main page sections
+  'home.newAssessment': {
+    en: 'New Assessment',
+    fr: 'Nouvelle évaluation',
+  },
+  'home.newAssessment.description': {
+    en: 'Start a new Risk & Compliance Self-Assessment for your department.',
+    fr: 'Commencez une nouvelle auto-évaluation des risques et de la conformité pour votre ministère.',
+  },
+  'home.newAssessment.button': {
+    en: 'Start New Assessment',
+    fr: 'Commencer une nouvelle évaluation',
+  },
+  'home.continueDraft': {
+    en: 'Continue Draft',
+    fr: 'Continuer l\'ébauche',
+  },
+  'home.continueDraft.description': {
+    en: 'You have a draft assessment in progress. Continue where you left off.',
+    fr: 'Vous avez une évaluation en cours. Continuez là où vous vous êtes arrêté.',
+  },
+  'home.continueDraft.button': {
+    en: 'Continue Draft',
+    fr: 'Continuer l\'ébauche',
+  },
+  'home.noDrafts': {
+    en: 'You don\'t have any draft assessments. Start a new assessment to begin.',
+    fr: 'Vous n\'avez aucune ébauche d\'évaluation. Commencez une nouvelle évaluation pour débuter.',
+  },
+  'home.noDrafts.button': {
+    en: 'No Drafts Available',
+    fr: 'Aucune ébauche disponible',
+  },
+  'home.table.fiscalYear': {
+    en: 'Fiscal Year',
+    fr: 'Exercice financier',
+  },
+  'home.table.lastUpdated': {
+    en: 'Last Updated',
+    fr: 'Dernière mise à jour',
+  },
+  'home.table.progress': {
+    en: 'Progress',
+    fr: 'Progrès',
+  },
+  'home.table.stepOf': {
+    en: 'Step {current} of {total}',
+    fr: 'Étape {current} sur {total}',
+  },
+  'home.keyBenefits': {
+    en: 'Key Benefits',
+    fr: 'Avantages clés',
+  },
+  'home.keyBenefits.summary': {
+    en: 'See how this digital assessment improves your experience',
+    fr: 'Découvrez comment cette évaluation numérique améliore votre expérience',
+  },
+  'home.keyBenefits.calculations': {
+    en: 'Instant Calculations: Flags, maturity scores, and residual risks are calculated automatically',
+    fr: 'Calculs instantanés: Les indicateurs, les scores de maturité et les risques résiduels sont calculés automatiquement',
+  },
+  'home.keyBenefits.save': {
+    en: 'Save & Resume: Draft capability allows you to save progress and resume later',
+    fr: 'Sauvegarde et reprise: La fonction d\'ébauche vous permet de sauvegarder votre progression et de reprendre plus tard',
+  },
+  'home.keyBenefits.workflow': {
+    en: 'Visual Workflow: Sliding overview lets you see progress through all assessment steps',
+    fr: 'Flux de travail visuel: L\'aperçu défilant vous permet de voir la progression à travers toutes les étapes de l\'évaluation',
+  },
+  'home.keyBenefits.output': {
+    en: 'Standard Output: Produces a Deputy-Head-ready PDF in the same format as the Word template',
+    fr: 'Résultat standardisé: Produit un PDF prêt pour le sous-ministre dans le même format que le modèle Word',
+  },
+  'home.assessmentProcess': {
+    en: 'Assessment Process',
+    fr: 'Processus d\'évaluation',
+  },
+  'home.assessmentProcess.summary': {
+    en: 'View the 4-step assessment process',
+    fr: 'Consultez le processus d\'évaluation en 4 étapes',
+  },
+  'home.assessmentProcess.step1.title': {
+    en: 'Answer Questions',
+    fr: 'Répondre aux questions',
+  },
+  'home.assessmentProcess.step1.description': {
+    en: 'Complete the assessment questions across all 11 areas of focus',
+    fr: 'Complétez les questions d\'évaluation dans les 11 domaines d\'intérêt',
+  },
+  'home.assessmentProcess.step2.title': {
+    en: 'Review Flags',
+    fr: 'Examiner les indicateurs',
+  },
+  'home.assessmentProcess.step2.description': {
+    en: 'Review compliance flags and average maturity scores by area',
+    fr: 'Examinez les indicateurs de conformité et les scores moyens de maturité par domaine',
+  },
+  'home.assessmentProcess.step3.title': {
+    en: 'Enter Risks',
+    fr: 'Saisir les risques',
+  },
+  'home.assessmentProcess.step3.description': {
+    en: 'Document corporate and area-specific risks in the risk register',
+    fr: 'Documentez les risques organisationnels et spécifiques aux domaines dans le registre des risques',
+  },
+  'home.assessmentProcess.step4.title': {
+    en: 'Export PDF',
+    fr: 'Exporter en PDF',
+  },
+  'home.assessmentProcess.step4.description': {
+    en: 'Generate bilingual PDF report for Deputy Head review',
+    fr: 'Générez un rapport PDF bilingue pour examen par le sous-ministre',
+  },
   
   // Common strings
   'common.cancel': {
