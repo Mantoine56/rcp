@@ -3,7 +3,7 @@
  * @description Government of Canada footer component
  * 
  * This component implements the footer following the GC Design System specifications.
- * It supports both compact and full display modes with all required elements.
+ * It matches the official Canada.ca footer design with all required elements.
  * Reference: https://design-system.alpha.canada.ca/en/components/footer/code/
  */
 
@@ -28,10 +28,11 @@ interface FooterProps {
 /**
  * Government of Canada standard footer component
  * Follows the GC Design System specifications
+ * Uses the full display mode as shown at: https://design-system.alpha.canada.ca/en/components/footer/code/
  */
 const Footer: React.FC<FooterProps> = ({ 
   currentLanguage, 
-  displayMode = 'compact',
+  displayMode = 'full', // Default to full display mode for complete footer
   showContextualBand = false
 }) => {
   // Footer translations for bilingual support
@@ -158,297 +159,108 @@ const Footer: React.FC<FooterProps> = ({
     : '/wet-assets/wmms-fip-fr.svg';
   
   return (
-    <footer className="gcds-footer" role="contentinfo" aria-label={translations.footerHeading[currentLanguage]}>
+    <footer className="bg-[#26374A] text-white" role="contentinfo" aria-label={translations.footerHeading[currentLanguage]}>
       <h2 id="gcds-footer-heading" className="sr-only">
         {translations.footerHeading[currentLanguage]}
       </h2>
+      
+      {/* Application Support section removed as requested */}
 
-      {/* Contextual Band - Application specific links */}
-      {showContextualBand && (
-        <div className="gcds-footer__contextual-band">
-          <div className="container mx-auto px-4 py-6" style={{ maxWidth: '1200px' }}>
-            <div className="gcds-footer__contextual-content">
-              <h3 className="gcds-footer__contextual-heading" style={{ 
-                fontSize: 'var(--text-xl)',
-                fontWeight: 'var(--font-semibold)',
-                color: 'var(--text-primary)',
-                marginBottom: 'var(--space-4)'
-              }}>
-                {translations.appSupport[currentLanguage]}
-              </h3>
-              <nav className="gcds-footer__contextual-nav" aria-labelledby="gcds-footer-contextual-nav">
-                <h4 id="gcds-footer-contextual-nav" className="sr-only">
-                  {translations.helpfulLinks[currentLanguage]}
-                </h4>
-                <ul className="gcds-footer__contextual-links" style={{ 
-                  listStyle: 'none',
-                  padding: 0,
-                  margin: 0,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: 'var(--space-5)'
-                }}>
-                  {contextualLinks.map((link, index) => (
-                    <li key={index} className="gcds-footer__contextual-link-item">
-                      <Link 
-                        href={link.href} 
-                        className="gcds-footer__link"
-                        style={{
-                          color: 'var(--text-link)',
-                          textDecoration: 'underline',
-                          fontSize: 'var(--text-base)',
-                          fontWeight: 'var(--font-normal)',
-                          transition: 'color 0.2s ease'
-                        }}
-                      >
-                        {link.text[currentLanguage]}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Links Band - Only for full display */}
-      {displayMode === 'full' && (
-        <div className="gcds-footer__main-band">
-          <div className="container mx-auto px-4 py-8" style={{ maxWidth: '1200px' }}>
-            <nav className="gcds-footer__main-nav" aria-labelledby="gcds-footer-main-nav">
-              <h3 id="gcds-footer-main-nav" className="sr-only">
-                {translations.aboutGovernment[currentLanguage]}
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8" style={{ marginTop: 'var(--space-4)' }}>
-                {/* First column */}
-                <div>
-                  <ul className="gcds-footer__main-links" style={{ 
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--space-3)'
-                  }}>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://www.canada.ca/${currentLanguage}/contact.html`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.contactUs[currentLanguage]}
-                      </Link>
-                    </li>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://www.canada.ca/${currentLanguage}/government/dept.html`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.departments[currentLanguage]}
-                      </Link>
-                    </li>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://www.canada.ca/${currentLanguage}/government/publicservice.html`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.publicService[currentLanguage]}
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                {/* Second column */}
-                <div>
-                  <ul className="gcds-footer__main-links" style={{ 
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--space-3)'
-                  }}>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://www.canada.ca/${currentLanguage}/news.html`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.news[currentLanguage]}
-                      </Link>
-                    </li>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://www.canada.ca/${currentLanguage}/government/system/laws.html`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.treaties[currentLanguage]}
-                      </Link>
-                    </li>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://www.canada.ca/${currentLanguage}/transparency/reporting.html`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.governmentWide[currentLanguage]}
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-                {/* Third column */}
-                <div>
-                  <ul className="gcds-footer__main-links" style={{ 
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--space-3)'
-                  }}>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://pm.gc.ca/${currentLanguage}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.primeMinister[currentLanguage]}
-                      </Link>
-                    </li>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://www.canada.ca/${currentLanguage}/government/system.html`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.howGovernmentWorks[currentLanguage]}
-                      </Link>
-                    </li>
-                    <li className="gcds-footer__main-link-item">
-                      <Link 
-                        href={`https://open.canada.ca/${currentLanguage}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="gcds-footer__link"
-                      >
-                        {translations.openGovernment[currentLanguage]}
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
-      )}
-
-      {/* Sub Links Band - Required for all modes */}
-      <div className="gcds-footer__sub-band">
-        <div className="container mx-auto px-4 py-4" style={{ maxWidth: '1200px' }}>
-          <div className="gcds-footer__sub-content">
-            {/* Footer links */}
-            <nav className="gcds-footer__sub-nav" aria-labelledby="gcds-footer-sub-nav">
-              <h3 id="gcds-footer-sub-nav" className="sr-only">
-                {translations.aboutThisSite[currentLanguage]}
-              </h3>
-              <ul className="gcds-footer__sub-links" style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0,
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 'var(--space-5)'
-              }}>
-                <li className="gcds-footer__sub-link-item">
-                  <Link 
-                    href={`https://www.canada.ca/${currentLanguage}/social.html`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="gcds-footer__link"
-                    aria-label={translations.socialMedia[currentLanguage]}
-                  >
-                    {translations.socialMedia[currentLanguage]}
-                  </Link>
-                </li>
-                <li className="gcds-footer__sub-link-item">
-                  <Link 
-                    href={`https://www.canada.ca/${currentLanguage}/mobile.html`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="gcds-footer__link"
-                    aria-label={translations.mobileApps[currentLanguage]}
-                  >
-                    {translations.mobileApps[currentLanguage]}
-                  </Link>
-                </li>
-                <li className="gcds-footer__sub-link-item">
-                  <Link 
-                    href={`https://www.canada.ca/${currentLanguage}/transparency/terms.html`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="gcds-footer__link"
-                    aria-label={translations.termsAndConditions[currentLanguage]}
-                  >
-                    {translations.termsAndConditions[currentLanguage]}
-                  </Link>
-                </li>
-                <li className="gcds-footer__sub-link-item">
-                  <Link 
-                    href={`https://www.canada.ca/${currentLanguage}/transparency/privacy.html`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="gcds-footer__link"
-                    aria-label={translations.privacy[currentLanguage]}
-                  >
-                    {translations.privacy[currentLanguage]}
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-
-            {/* Government of Canada wordmark */}
-            <div className="gcds-footer__brand">
-              <Image 
-                src={wordmarkSrc}
-                width={150} 
-                height={40} 
-                alt={translations.symbol[currentLanguage]} 
-                className="gcds-footer__wordmark"
-              />
-            </div>
+      {/* Main Links Band - Full display mode Required Section */}
+      <div className="py-8 border-b border-gray-600">
+        <div className="container mx-auto px-4" style={{ maxWidth: '1200px' }}>
+          {/* Theme section - Top level links related to the site theme */}
+          <div className="mb-10">
+            <h3 className="text-xl font-semibold mb-3 text-white">Risk & Compliance Portal</h3>
+            <ul className="flex flex-wrap gap-x-10 gap-y-4 list-none p-0 m-0">
+              <li><Link href="#" className="text-white hover:text-gray-200 underline">About RCP</Link></li>
+              <li><Link href="#" className="text-white hover:text-gray-200 underline">Resources</Link></li>
+              <li><Link href="#" className="text-white hover:text-gray-200 underline">Training materials</Link></li>
+            </ul>
           </div>
           
-          {/* Date modified section */}
-          <div className="gcds-footer__modified-date" style={{
-            borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-            paddingTop: 'var(--space-4)',
-            marginTop: 'var(--space-4)'
-          }}>
-            <dl style={{
-              display: 'flex',
-              gap: 'var(--space-2)',
-              margin: 0,
-              color: 'var(--text-inverse)',
-              fontSize: 'var(--text-sm)'
-            }}>
-              <dt>
-                {translations.dateModified[currentLanguage]}
-              </dt>
-              <dd>
-                {formattedDate}
-              </dd>
-            </dl>
+          {/* Government of Canada section - Main navigation links */}
+          <div>
+            <h3 className="text-xl font-semibold mb-4 text-white">{translations.governmentOfCanada[currentLanguage]}</h3>
+            
+            {/* Three column layout for main navigation links */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8">
+              {/* Column 1 */}
+              <div>
+                <ul className="list-none p-0 m-0 space-y-4">
+                  <li><Link href="https://www.canada.ca/en/contact.html" className="text-white hover:text-gray-200 underline font-semibold" target="_blank" rel="noopener noreferrer">All contacts</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/jobs.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Jobs</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/immigration-citizenship.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Immigration and citizenship</Link></li>
+                  <li><Link href="https://travel.gc.ca/" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Travel and tourism</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/business.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Business</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/benefits.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Benefits</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/health.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Health</Link></li>
+                </ul>
+              </div>
+              
+              {/* Column 2 */}
+              <div>
+                <ul className="list-none p-0 m-0 space-y-4">
+                  <li><Link href="https://www.canada.ca/en/government/dept.html" className="text-white hover:text-gray-200 underline font-semibold" target="_blank" rel="noopener noreferrer">Departments and agencies</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/taxes.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Taxes</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/environment.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Environment and natural resources</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/defence.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">National security and defence</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/culture.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Culture, history and sport</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/policing.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Policing, justice and emergencies</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/transport.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Transport and infrastructure</Link></li>
+                </ul>
+              </div>
+              
+              {/* Column 3 */}
+              <div>
+                <ul className="list-none p-0 m-0 space-y-4">
+                  <li><Link href="https://www.canada.ca/en/government/system.html" className="text-white hover:text-gray-200 underline font-semibold" target="_blank" rel="noopener noreferrer">About government</Link></li>
+                  <li><Link href="https://www.international.gc.ca/world-monde/index.aspx?lang=eng" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Canada and the world</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/finance.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Money and finance</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/science.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Science and innovation</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/indigenous-peoples.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Indigenous Peoples</Link></li>
+                  <li><Link href="https://www.veterans.gc.ca/eng" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Veterans and military</Link></li>
+                  <li><Link href="https://www.canada.ca/en/services/youth.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">Youth</Link></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sub Links / Social Media section - Required in full display */}
+      <div className="border-b border-gray-600 py-4">
+        <div className="container mx-auto px-4" style={{ maxWidth: '1200px' }}>
+          <ul className="flex flex-wrap gap-x-8 gap-y-3 list-none p-0 m-0">
+            <li><Link href="https://www.canada.ca/en/social.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">{currentLanguage === 'en' ? 'Social media' : 'Médias sociaux'}</Link></li>
+            <li><Link href="https://www.canada.ca/en/mobile.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">{currentLanguage === 'en' ? 'Mobile applications' : 'Applications mobiles'}</Link></li>
+            <li><Link href="https://www.canada.ca/en/government/about.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">{currentLanguage === 'en' ? 'About Canada.ca' : 'À propos de Canada.ca'}</Link></li>
+            <li><Link href="https://www.canada.ca/en/transparency/terms.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">{currentLanguage === 'en' ? 'Terms and conditions' : 'Avis'}</Link></li>
+            <li><Link href="https://www.canada.ca/en/transparency/privacy.html" className="text-white hover:text-gray-200 underline" target="_blank" rel="noopener noreferrer">{currentLanguage === 'en' ? 'Privacy' : 'Confidentialité'}</Link></li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Brand Band with Date modified and Canada wordmark - Required in all modes */}
+      <div className="py-5">
+        <div className="container mx-auto px-4" style={{ maxWidth: '1200px' }}>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            {/* Date modified */}
+            <div>
+              <span className="text-sm text-white">
+                {translations.dateModified[currentLanguage]} {formattedDate}
+              </span>
+            </div>
+            {/* Canada wordmark */}
+            <div>
+              <Image
+                src={wordmarkSrc}
+                alt={translations.symbol[currentLanguage]}
+                width={150}
+                height={32}
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>

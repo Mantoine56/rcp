@@ -705,7 +705,8 @@ li {
 .gc-button-secondary {
   background-color: var(--text-inverse);
   color: var(--gc-blue);
-  border: 2px solid var(--gc-blue);
+  border: 1px solid var(--gc-blue);
+  text-decoration: none;
 }
 
 .gc-button-secondary:hover,
@@ -713,11 +714,13 @@ li {
   background-color: #E1E5E8;
   color: #16446C;
   border-color: #16446C;
+  text-decoration: underline;
 }
 
 .gc-button-secondary:focus {
   box-shadow: 0 0 0 4px var(--focus-outline);
   /* Using the bright yellow focus ring from GC Design System */
+  outline: none;
 }
 
 /* Danger/Destructive button variant */

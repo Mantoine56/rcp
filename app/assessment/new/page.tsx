@@ -332,13 +332,14 @@ export default function NewAssessment() {
         
         {/* Form actions */}
         <div className="flex justify-between mt-8 mb-4">
-          <Link href="/" className="gc-button-secondary">
+          {/* Updated Cancel button using proper GC Design System styling */}
+          <Link href="/" className="px-4 py-2 bg-white text-[#26374A] border border-[#26374A] hover:bg-gray-100 hover:underline hover:text-[#16446C] focus:outline-none focus:ring-4 focus:ring-[#FFBF47] transition rounded">
             {t('common.cancel')}
           </Link>
           
           <button 
             type="submit" 
-            className="gc-button"
+            className="px-4 py-2 bg-[#26374A] text-white border border-[#26374A] hover:bg-[#1C578A] hover:underline focus:outline-none focus:ring-4 focus:ring-[#FFBF47] transition rounded"
             disabled={isSubmitting}
           >
             {isSubmitting ? t('common.submitting') : t('assessment.continue')}
