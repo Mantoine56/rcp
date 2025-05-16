@@ -10,9 +10,9 @@
 
 'use client';
 
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Link from 'next/link';
@@ -20,18 +20,37 @@ import Link from 'next/link';
 // Import custom components
 import FormSection from '@/components/forms/FormSection';
 import FormInput from '@/components/forms/FormInput';
+import FormSelect from '@/components/forms/FormSelect';
 import { useTranslation } from '@/lib/i18n';
+import {
+  Stepper,
+  StepperItem,
+  StepperIndicator,
+  StepperTitle,
+  StepperSeparator,
+  StepperTrigger
+} from '@/components/ui/stepper';
+
+// Import department data
+import { getSortedDepartments } from '@/lib/departments';
 
 /**
  * Form validation schema
  * Defines the required fields and validation rules for the form
  */
 const formSchema = z.object({
-  departmentName: z.string().min(2, 'Department name is required'),
-  departmentAcronym: z.string().min(2, 'Department acronym is required'),
+  // Department Information
+  departmentId: z.string({
+    required_error: "Department selection is required",
+  }),
+  departmentOther: z.string().optional(),
   fiscalYear: z.string().regex(/^\d{4}-\d{4}$/, 'Fiscal year must be in YYYY-YYYY format'),
+  
+  // Coordinator Information
   coordinatorName: z.string().min(2, 'Coordinator name is required'),
   coordinatorEmail: z.string().email('Please enter a valid email address'),
+  coordinatorPhone: z.string().regex(/^[\d\(\)\-\+\s]+$/, 'Please enter a valid phone number').optional(),
+  coordinatorTitle: z.string().optional(),
 });
 
 // Type for the form values
@@ -46,21 +65,52 @@ export default function NewAssessment() {
   const { t, language } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // Initialize react-hook-form
+  /**
+   * Get departments for dropdown selection
+   * Sorted alphabetically by English name
+   */
+  const departments = getSortedDepartments();
+  const departmentOptions = departments.map(dept => ({
+    value: dept.acronym,
+    label: language === 'en' ? dept.nameEn : dept.nameFr
+  }));
+  
+  // Add "Other" option to the end
+  departmentOptions.push({
+    value: 'OTHER',
+    label: language === 'en' ? 'Other (please specify)' : 'Autre (veuillez préciser)'
+  });
+  
+  // State to track if "Other" department is selected
+  const [showOtherDepartment, setShowOtherDepartment] = useState(false);
+  
+  // Initialize react-hook-form with Controller for select dropdown
   const {
     register,
+    control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      departmentName: '',
-      departmentAcronym: '',
+      departmentId: '',
+      departmentOther: '',
       fiscalYear: '2025-2026', // Default to current fiscal year
       coordinatorName: '',
       coordinatorEmail: '',
+      coordinatorPhone: '',
+      coordinatorTitle: '',
     },
   });
+  
+  // Watch the departmentId field to show/hide the "Other" input
+  const departmentId = watch('departmentId');
+  
+  // Update the "Other" department visibility when departmentId changes
+  useEffect(() => {
+    setShowOtherDepartment(departmentId === 'OTHER');
+  }, [departmentId]);
   
   /**
    * Handle form submission
@@ -111,52 +161,118 @@ export default function NewAssessment() {
         </nav>
         
         {/* Step indicator */}
-        <div className="bg-gc-light-grey p-4 rounded mb-6">
-          <p className="font-semibold mb-2">{t('assessment.stepIndicator')}</p>
-          <div className="flex flex-wrap gap-2">
-            <span className="bg-gc-blue text-white px-3 py-1 rounded-full text-sm">
-              {t('assessment.step', { number: '1' })}
-            </span>
-            <span className="bg-gc-light-text text-gc-dark-text border border-gc-border px-3 py-1 rounded-full text-sm">
-              {t('assessment.step', { number: '2' })}
-            </span>
-            <span className="bg-gc-light-text text-gc-dark-text border border-gc-border px-3 py-1 rounded-full text-sm">
-              {t('assessment.step', { number: '3' })}
-            </span>
-            <span className="bg-gc-light-text text-gc-dark-text border border-gc-border px-3 py-1 rounded-full text-sm">
-              {t('assessment.step', { number: '4' })}
-            </span>
-          </div>
+        <div className="bg-[#f5f5f5] p-3 rounded-md mb-6 border border-[#e5e5e5] shadow-sm">
+          
+          {/* Assessment Stepper Component */}
+          <Stepper 
+            defaultValue={1} 
+            className="py-2 px-2 max-w-4xl mx-auto"
+            aria-label="Assessment Progress"
+          >
+            {/* Step 1: Department Information */}
+            <StepperItem 
+              step={1} 
+              completed={false} 
+              className="[&:not(:last-child)]:flex-1"
+              aria-label="Department Information Step"
+            >
+              <StepperTrigger className="flex items-center">
+                <StepperIndicator />
+                <StepperTitle className="flex items-center">
+                  <span className="text-xs font-semibold">{t('assessment.steps.departmentInfo')}</span>
+                </StepperTitle>
+              </StepperTrigger>
+              <StepperSeparator />
+            </StepperItem>
+            
+            {/* Step 2: Risk Assessment */}
+            <StepperItem 
+              step={1} 
+              disabled={true}
+              className="[&:not(:last-child)]:flex-1"
+              aria-label="Risk Assessment Step"
+            >
+              <StepperTrigger className="flex items-center">
+                <StepperIndicator />
+                <StepperTitle className="flex items-center">
+                  <span className="text-xs font-semibold">{t('assessment.steps.riskAssessment')}</span>
+                </StepperTitle>
+              </StepperTrigger>
+              <StepperSeparator />
+            </StepperItem>
+            
+            {/* Step 3: Controls Assessment */}
+            <StepperItem 
+              step={2}
+              disabled={true}
+              className="[&:not(:last-child)]:flex-1"
+              aria-label="Controls Assessment Step"
+            >
+              <StepperTrigger className="flex items-center">
+                <StepperIndicator />
+                <StepperTitle className="flex items-center">
+                  <span className="text-xs font-semibold">{t('assessment.steps.controlsAssessment')}</span>
+                </StepperTitle>
+              </StepperTrigger>
+              <StepperSeparator />
+            </StepperItem>
+            
+            {/* Step 4: Review & Submit */}
+            <StepperItem 
+              step={3}
+              disabled={true}
+              className="flex-1"
+              aria-label="Review and Submit Step"
+            >
+              <StepperTrigger className="flex items-center">
+                <StepperIndicator />
+                <StepperTitle className="flex items-center">
+                  <span className="text-xs font-semibold">{t('assessment.steps.reviewSubmit')}</span>
+                </StepperTitle>
+              </StepperTrigger>
+            </StepperItem>
+          </Stepper>
         </div>
       </div>
       
       {/* Department information form */}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-8">
+        {/* Department Information Section */}
         <FormSection
           title={t('assessment.departmentInfo.title')}
           subtitle={t('assessment.departmentInfo.subtitle')}
           sectionId="department-info"
           helpText={t('assessment.departmentInfo.helpText')}
         >
-          {/* Department name */}
-          <FormInput
-            id="departmentName"
-            label={t('assessment.departmentInfo.departmentName')}
-            required
-            error={errors.departmentName?.message}
-            {...register('departmentName')}
+          {/* Department selection dropdown */}
+          <Controller
+            control={control}
+            name="departmentId"
+            render={({ field }) => (
+              <FormSelect
+                id="departmentId"
+                label={t('assessment.departmentInfo.departmentName')}
+                options={departmentOptions}
+                emptyOption={t('assessment.departmentInfo.selectDepartment')}
+                required
+                error={errors.departmentId?.message}
+                hint={t('assessment.departmentInfo.departmentHint')}
+                {...field}
+              />
+            )}
           />
           
-          {/* Department acronym */}
-          <FormInput
-            id="departmentAcronym"
-            label={t('assessment.departmentInfo.departmentAcronym')}
-            required
-            maxLength={10}
-            showCharacterCount
-            error={errors.departmentAcronym?.message}
-            {...register('departmentAcronym')}
-          />
+          {/* "Other" department field - only shown when "Other" is selected */}
+          {showOtherDepartment && (
+            <FormInput
+              id="departmentOther"
+              label={t('assessment.departmentInfo.departmentOther')}
+              required
+              error={errors.departmentOther?.message}
+              hint={t('assessment.departmentInfo.departmentOtherHint')}
+              {...register('departmentOther')}
+            />
+          )}
           
           {/* Fiscal year */}
           <FormInput
@@ -169,10 +285,12 @@ export default function NewAssessment() {
           />
         </FormSection>
         
-        {/* Coordinator information */}
+        {/* Coordinator Information Section */}
         <FormSection
           title={t('assessment.coordinatorInfo.title')}
+          subtitle={t('assessment.coordinatorInfo.subtitle')}
           sectionId="coordinator-info"
+          helpText={t('assessment.coordinatorInfo.helpText')}
         >
           {/* Coordinator name */}
           <FormInput
@@ -183,6 +301,14 @@ export default function NewAssessment() {
             {...register('coordinatorName')}
           />
           
+          {/* Coordinator job title */}
+          <FormInput
+            id="coordinatorTitle"
+            label={t('assessment.coordinatorInfo.jobTitle')}
+            error={errors.coordinatorTitle?.message}
+            {...register('coordinatorTitle')}
+          />
+          
           {/* Coordinator email */}
           <FormInput
             id="coordinatorEmail"
@@ -191,6 +317,16 @@ export default function NewAssessment() {
             required
             error={errors.coordinatorEmail?.message}
             {...register('coordinatorEmail')}
+          />
+          
+          {/* Coordinator phone */}
+          <FormInput
+            id="coordinatorPhone"
+            label={t('assessment.coordinatorInfo.phone')}
+            type="tel"
+            error={errors.coordinatorPhone?.message}
+            hint={t('assessment.coordinatorInfo.phoneHint')}
+            {...register('coordinatorPhone')}
           />
         </FormSection>
         

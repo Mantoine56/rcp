@@ -60,7 +60,9 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(({
   };
   
   // Determine input class based on validation state
-  const inputClassName = `gc-input ${error ? 'border-gc-danger focus:border-gc-danger focus:ring-gc-danger' : ''} ${className}`;
+  const inputClassName = `block w-full px-3 py-2 text-base border rounded-md outline-none
+    ${error ? 'border-[#B10E1E] focus:border-[#B10E1E] focus:ring-[#B10E1E]' : 'border-[#cccccc] focus:border-[#26374A] focus:ring-[#26374A]'} 
+    focus:outline-none focus:ring-2 ${className}`;
   
   // Determine if we should show the character count
   const shouldShowCharCount = showCharacterCount && maxLength;

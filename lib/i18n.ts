@@ -162,6 +162,40 @@ export const translations: Record<string, TranslatedContent> = {
     en: 'Step {number}',
     fr: 'Étape {number}',
   },
+  
+  // Step names
+  'assessment.steps.departmentInfo': {
+    en: 'Department Information',
+    fr: 'Information sur le ministère',
+  },
+  'assessment.steps.departmentInfoDesc': {
+    en: 'Basic department details',
+    fr: 'Détails de base du ministère',
+  },
+  'assessment.steps.riskAssessment': {
+    en: 'Risk Assessment',
+    fr: 'Évaluation des risques',
+  },
+  'assessment.steps.riskAssessmentDesc': {
+    en: 'Identify and evaluate risks',
+    fr: 'Identifier et évaluer les risques',
+  },
+  'assessment.steps.controlsAssessment': {
+    en: 'Controls Assessment',
+    fr: 'Évaluation des contrôles',
+  },
+  'assessment.steps.controlsAssessmentDesc': {
+    en: 'Evaluate control effectiveness',
+    fr: 'Évaluer l\'efficacité des contrôles',
+  },
+  'assessment.steps.reviewSubmit': {
+    en: 'Review & Submit',
+    fr: 'Révision et soumission',
+  },
+  'assessment.steps.reviewSubmitDesc': {
+    en: 'Final review and submission',
+    fr: 'Révision finale et soumission',
+  },
   'assessment.continue': {
     en: 'Continue to Questions',
     fr: 'Continuer aux questions',
@@ -185,12 +219,24 @@ export const translations: Record<string, TranslatedContent> = {
     fr: 'Ces informations seront utilisées pour générer votre rapport d\'évaluation final.',
   },
   'assessment.departmentInfo.departmentName': {
-    en: 'Department Name',
-    fr: 'Nom du ministère',
+    en: 'Department/Agency',
+    fr: 'Ministère/Agence',
   },
-  'assessment.departmentInfo.departmentAcronym': {
-    en: 'Department Acronym',
-    fr: 'Acronyme du ministère',
+  'assessment.departmentInfo.selectDepartment': {
+    en: 'Select a department or agency...',
+    fr: 'Sélectionnez un ministère ou une agence...',
+  },
+  'assessment.departmentInfo.departmentHint': {
+    en: 'Select the Government of Canada department or agency you are completing this assessment for',
+    fr: 'Sélectionnez le ministère ou l\'agence du gouvernement du Canada pour lequel vous remplissez cette évaluation',
+  },
+  'assessment.departmentInfo.departmentOther': {
+    en: 'Department/Agency Name',
+    fr: 'Nom du ministère/de l\'agence',
+  },
+  'assessment.departmentInfo.departmentOtherHint': {
+    en: 'Please provide the full name of your department or agency',
+    fr: 'Veuillez fournir le nom complet de votre ministère ou agence',
   },
   'assessment.departmentInfo.fiscalYear': {
     en: 'Fiscal Year',
@@ -201,18 +247,38 @@ export const translations: Record<string, TranslatedContent> = {
     fr: 'Entrez l\'année fiscale au format AAAA-AAAA (ex. 2025-2026)',
   },
   
-  // Coordinator Info
+  // Coordinator info
   'assessment.coordinatorInfo.title': {
     en: 'Coordinator Information',
-    fr: 'Information sur le coordinateur',
+    fr: 'Information du coordonnateur',
+  },
+  'assessment.coordinatorInfo.subtitle': {
+    en: 'Contact information for the person coordinating this assessment',
+    fr: 'Coordonnées de la personne qui coordonne cette évaluation',
+  },
+  'assessment.coordinatorInfo.helpText': {
+    en: 'This person will be the main point of contact for the assessment and will receive notifications about the assessment status.',
+    fr: 'Cette personne sera le principal point de contact pour l\'évaluation et recevra des notifications concernant le statut de l\'évaluation.',
   },
   'assessment.coordinatorInfo.name': {
     en: 'Coordinator Name',
-    fr: 'Nom du coordinateur',
+    fr: 'Nom du coordonnateur',
+  },
+  'assessment.coordinatorInfo.jobTitle': {
+    en: 'Job Title',
+    fr: 'Titre du poste',
   },
   'assessment.coordinatorInfo.email': {
     en: 'Coordinator Email',
-    fr: 'Courriel du coordinateur',
+    fr: 'Courriel du coordonnateur',
+  },
+  'assessment.coordinatorInfo.phone': {
+    en: 'Phone Number',
+    fr: 'Numéro de téléphone',
+  },
+  'assessment.coordinatorInfo.phoneHint': {
+    en: 'Include area code, e.g. (613) 555-0100',
+    fr: 'Incluez l\'indicatif régional, p. ex. (613) 555-0100',
   },
   
   // Navigation
