@@ -166,7 +166,7 @@ export const translations: Record<string, TranslatedContent> = {
   // Step names
   'assessment.steps.departmentInfo': {
     en: 'Department Information',
-    fr: 'Information sur le ministère',
+    fr: 'Information ministérielle',
   },
   'assessment.steps.departmentInfoDesc': {
     en: 'Basic department details',
@@ -278,7 +278,29 @@ export const translations: Record<string, TranslatedContent> = {
   },
   'assessment.coordinatorInfo.phoneHint': {
     en: 'Include area code, e.g. (613) 555-0100',
-    fr: 'Incluez l\'indicatif régional, p. ex. (613) 555-0100',
+    fr: 'Inclure l\'indicatif régional, p. ex. (613) 555-0100',
+  },
+  
+  // Date input component translations
+  'date.day': {
+    en: 'Day',
+    fr: 'Jour',
+  },
+  'date.month': {
+    en: 'Month',
+    fr: 'Mois',
+  },
+  'date.year': {
+    en: 'Year',
+    fr: 'Année',
+  },
+  'date.format.full': {
+    en: 'YYYY-MM-DD',
+    fr: 'AAAA-MM-JJ',
+  },
+  'date.format.compact': {
+    en: 'YYYY-MM',
+    fr: 'AAAA-MM',
   },
   
   // Navigation

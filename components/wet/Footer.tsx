@@ -251,16 +251,7 @@ const Footer: React.FC<FooterProps> = ({
                 {translations.dateModified[currentLanguage]} {formattedDate}
               </span>
             </div>
-            {/* Canada wordmark */}
-            <div>
-              <Image
-                src={wordmarkSrc}
-                alt={translations.symbol[currentLanguage]}
-                width={150}
-                height={32}
-                priority
-              />
-            </div>
+            {/* Canada wordmark removed as requested */}
           </div>
         </div>
       </div>
