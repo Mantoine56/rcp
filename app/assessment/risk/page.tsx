@@ -100,6 +100,7 @@ export default function RiskAssessment() {
   const [selectedAssignee, setSelectedAssignee] = useState<string>('');
   const [assignmentNote, setAssignmentNote] = useState<string>('');
   const [areaMetadata, setAreaMetadata] = useState<AreaMetadata[]>([]);
+  const [isAreaSelectorExpanded, setIsAreaSelectorExpanded] = useState(true);
   
   // Load saved form data from localStorage on initial load
   useEffect(() => {
@@ -483,46 +484,80 @@ export default function RiskAssessment() {
 
       {/* Risk Assessment Sections */}
       <div className="mb-8 bg-white p-6 border border-gray-200 rounded-md">
-        <FormSection
-          title="Risk Assessment"
-          subtitle="Select a section to begin your risk assessment"
-          sectionId="risk-assessment-sections"
-          helpText="Each section contains a set of risk assessment questions that can be assigned to subject matter experts."
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            {areaMetadata.map((area) => (
-              <button
-                key={area.id}
-                onClick={() => setCurrentArea(area.id as AssessmentArea)}
-                className={`p-4 text-left rounded-md border ${
-                  currentArea === area.id
-                    ? 'bg-[#E6F5FF] border-[#2B8CC4]'
-                    : 'bg-white border-gray-200 hover:bg-gray-50'
-                }`}
-              >
-                <h3 className="font-semibold">{area.title}</h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {getAreaStatusLabel(area.id as AssessmentArea)}
-                </p>
-                <div className="mt-1 w-full bg-gray-200 rounded-full h-1.5">
+        {isAreaSelectorExpanded ? (
+          <FormSection
+            title="Risk Assessment"
+            subtitle="Select a section to begin your risk assessment"
+            sectionId="risk-assessment-sections"
+            helpText="Each section contains a set of risk assessment questions that can be assigned to subject matter experts."
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              {areaMetadata.map((area) => (
+                <button
+                  key={area.id}
+                  onClick={() => {
+                    setCurrentArea(area.id as AssessmentArea);
+                    setIsAreaSelectorExpanded(false); // Collapse the selector when an area is selected
+                  }}
+                  className={`p-4 text-left rounded-md border ${
+                    currentArea === area.id
+                      ? 'bg-[#E6F5FF] border-[#2B8CC4]'
+                      : 'bg-white border-gray-200 hover:bg-gray-50'
+                  }`}
+                >
+                  <h3 className="font-semibold">{area.title}</h3>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {getAreaStatusLabel(area.id as AssessmentArea)}
+                  </p>
+                  <div className="mt-1 w-full bg-gray-200 rounded-full h-1.5">
+                    <div
+                      className="bg-blue-600 h-1.5 rounded-full"
+                      style={{ width: `${getAreaCompletionPercentage(area.id as AssessmentArea)}%` }}
+                    ></div>
+                  </div>
+                  <div className="mb-4">
+                    <p>{translateKey('assessment.risk.instructions.title', 'Instructions')}:</p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {translateKey('assessment.risk.instructions.text', 'Please answer the following questions to assess risk in this area.')}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </FormSection>
+        ) : (
+          <div className="mb-4 flex justify-between items-center">
+            <div className="flex items-center">
+              <h2 className="text-xl font-semibold mr-2">
+                Risk Assessment: {areaMetadata.find(a => a.id === currentArea)?.title}
+              </h2>
+              <div className="ml-4 flex items-center">
+                <div className="w-40 bg-gray-200 rounded-full h-1.5 mr-2">
                   <div
                     className="bg-blue-600 h-1.5 rounded-full"
-                    style={{ width: `${getAreaCompletionPercentage(area.id as AssessmentArea)}%` }}
+                    style={{ width: `${getAreaCompletionPercentage(currentArea)}%` }}
                   ></div>
                 </div>
-                <div className="mb-4">
-                  <p>{translateKey('assessment.risk.instructions.title', 'Instructions')}:</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    {translateKey('assessment.risk.instructions.text', 'Please answer the following questions to assess risk in this area.')}
-                  </p>
-                </div>
-              </button>
-            ))}
+                <span className="text-sm text-gray-600">
+                  {getAreaStatusLabel(currentArea)}
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsAreaSelectorExpanded(true)}
+              className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md flex items-center"
+              aria-label="Expand area selector"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+              </svg>
+              Show All Areas
+            </button>
           </div>
-        </FormSection>
+        )}
 
         {/* Selected section questions and assignment panel */}
-        <div className="mt-8">
+        <div className={`${isAreaSelectorExpanded ? 'mt-8' : 'mt-4'}`}>
           {/* Assignment status banner */}
           <div className={`rounded-t-md p-4 flex justify-between items-center ${currentAssignment ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50 border border-gray-200'}`}>
             <div>
