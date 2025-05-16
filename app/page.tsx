@@ -31,23 +31,28 @@ export default function Home() {
   // const { t, language } = useTranslation();
   
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Page header with intro text */}
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold mb-4 text-gc-blue">
-          Risk & Compliance Self-Assessment Portal
-        </h1>
-        
-        <div className="bg-gc-highlight p-4 border-l-4 border-gc-warning mb-6">
-          <p className="mb-2">
-            <strong>Version:</strong> GC-RCP Lite (MVP 1)
-          </p>
-          <p>
-            This portal allows Department Coordinators to complete the Treasury Board Secretariat (TBS) 
-            Risk & Compliance Process assessment digitally, replacing the previous 60-page Word workbook.
-          </p>
+    <>
+      {/* Page header with gray background area - matching GC Design System */}
+      <div className="bg-[#F5F5F5] w-full border-b border-[#CCCCCC] mb-8">
+        <div className="max-w-4xl mx-auto px-4 py-6">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 text-gc-blue">
+            Risk & Compliance Self-Assessment Portal
+          </h1>
+          
+          <div className="bg-[#FFFCEA] p-5 border-l-4 border-[#EE7100] mb-0">
+            <p className="mb-2">
+              <strong>Version:</strong> GC-RCP Lite (MVP 1)
+            </p>
+            <p>
+              This portal allows Department Coordinators to complete the Treasury Board Secretariat (TBS) 
+              Risk & Compliance Process assessment digitally, replacing the previous 60-page Word workbook.
+            </p>
+          </div>
         </div>
       </div>
+      
+      {/* Main content area */}
+      <div className="max-w-4xl mx-auto px-4">
 
       {/* Action cards */}
       <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -56,13 +61,15 @@ export default function Home() {
           <h2 className="text-xl font-semibold mb-4 text-gc-blue">
             New Assessment
           </h2>
-          <p className="mb-6 text-gc-dark-text">
+          <p className="mb-6">
             Start a new Risk & Compliance Self-Assessment for your department.
           </p>
           <div className="flex justify-end">
             <Link 
               href="/assessment/new"
-              className="gc-button"
+              className="gc-button gc-button-primary" 
+              /* Explicitly adding primary class for consistency with GC Design System */
+              aria-label="Start a new risk and compliance assessment"
             >
               Start New Assessment
             </Link>
@@ -101,7 +108,9 @@ export default function Home() {
               <div className="flex justify-end">
                 <Link 
                   href={`/assessment/${dummyDrafts[0].id}`}
-                  className="gc-button"
+                  className="gc-button gc-button-primary"
+                  /* Explicitly adding primary class for consistency with GC Design System */
+                  aria-label="Continue working on your draft assessment"
                 >
                   Continue Draft
                 </Link>
@@ -113,7 +122,7 @@ export default function Home() {
                 You don't have any draft assessments. Start a new assessment to begin.
               </p>
               <div className="flex justify-end">
-                <span className="gc-button-secondary opacity-50 cursor-not-allowed">
+                <span className="gc-button-secondary opacity-50 cursor-not-allowed" aria-disabled="true">
                   No Drafts Available
                 </span>
               </div>
@@ -192,5 +201,10 @@ export default function Home() {
         - Will implement bilingual support via the language context
       */}
     </div>
+    {/* End of main content container */}
+  </>  /* End of Fragment */
   );
+  /* Note: We're using React Fragment (<></>) to allow multiple top-level elements
+     - The gray header area with full width background
+     - The main content container with max width */
 }

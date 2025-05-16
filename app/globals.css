@@ -3,51 +3,117 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Canada.ca UI Theme Tokens - Light Mode */
+/* GC Design System Tokens - Light Mode */
 :root {
-  /* Base colors from Web Experience Toolkit (WET) */
-  --gc-background: #ffffff;
-  --gc-foreground: #333333;
-  --gc-red: #B1001C;
+  /* Base colors from GC Design System */
   --gc-blue: #26374A;
-  --gc-nav-blue: #284162;
-  --gc-light-blue: #335075;
-  --gc-visited-link: #7834BC;
-  --gc-footer-bg: #F8F8F8;
-  --gc-footer-text: #284162;
-  --gc-highlight: #FFFCEA;
-  --gc-success: #278400;
-  --gc-info: #269ABC;
-  --gc-warning: #EE7100;
-  --gc-error: #D3080C;
-  --gc-disabled: #CCCCCC;
-  --gc-primary-accent: #333333;
-  --gc-primary-button: #335075;
+  --gc-red: #B10E1E;
+  --gc-white: #FFFFFF;
+  --gc-black: #000000;
+  --gc-nav-blue: #1C578A;
+  --gc-accent-blue: #2B8CC4;
+  --gc-dark-blue: #1C3150;
+  
+  /* Text colors */
+  --text-primary: #333333;
+  --text-secondary: #5C5C5C;
+  --text-inverse: #FFFFFF;
+  --text-link: #2B8CC4;
+  --text-link-visited: #7834BC;
+  --text-link-hover: #0535D2;
+  --text-error: #D3080C;
+  
+  /* Background colors */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --bg-accent: #EEE7E3;
+  --bg-dark: #26374A;
+  --bg-footer: #26374A;
+  --bg-header: #FFFFFF;
+  --bg-error: #F8D7DA;
+  --bg-success: #DFF0D8;
+  --bg-warning: #FCF8E3;
+  --bg-info: #D9EDF7;
+  
+  /* Border colors */
+  --border-primary: #CCCCCC;
+  --border-accent: #26374A;
+  --border-light: #E5E5E5;
+  --border-error: #D3080C;
+  
+  /* Spacing */
+  --space-none: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+  --space-8: 3rem;
+  --space-9: 4rem;
+  --space-10: 5rem;
+  --space-11: 6rem;
+  --space-12: 8rem;
+  
+  /* Typography */
+  --font-primary: 'Noto Sans', sans-serif;
+  --font-mono: 'Noto Mono', monospace;
+  
+  /* Font sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  
+  /* Font weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  /* Line heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+  
+  /* Focus rings and borders */
+  --focus-outline: #FFBF47;
+  --radius: 4px;
   
   /* Semantic aliases for easy theme switching */
-  --background: var(--gc-background);
-  --foreground: var(--gc-foreground);
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
   --primary: var(--gc-blue);
-  --primary-foreground: white;
-  --secondary: var(--gc-light-blue);
-  --muted: var(--gc-footer-bg);
-  --muted-foreground: var(--gc-footer-text);
-  --accent: var(--gc-highlight);
-  --accent-foreground: var(--gc-foreground);
-  --destructive: var(--gc-error);
-  --destructive-foreground: white;
-  --success: var(--gc-success);
-  --info: var(--gc-info);
-  --warning: var(--gc-warning);
-  --error: var(--gc-error);
-
-  /* Focus rings and borders */
-  --border: #E0E0E0;
-  --input: var(--gc-primary-accent);
-  --ring: var(--gc-blue);
+  --primary-foreground: var(--text-inverse);
+  --secondary: var(--gc-accent-blue);
+  --muted: var(--bg-secondary);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--bg-accent);
+  --accent-foreground: var(--text-primary);
+  --destructive: var(--text-error);
+  --destructive-foreground: var(--text-inverse);
+  --border: var(--border-primary);
+  --input: var(--text-primary);
+  --ring: var(--focus-outline);
   
-  /* Standard WET radius values */
-  --radius: 4px;
+  /* GC Design System semantic colors */
+  --gc-link: var(--text-link);
+  --gc-link-visited: var(--text-link-visited);
+  --gc-link-hover: var(--text-link-hover);
+  --gc-success: #278400;
+  --gc-info: var(--text-link); 
+  --gc-warning: #EE7100;
+  --gc-error: var(--text-error);
+  --gc-disabled: var(--border-primary);
 }
 
 /* Canada.ca UI Theme Tokens - Dark Mode */
@@ -98,31 +164,609 @@ a:visited {
   color: var(--gc-visited-link);
 }
 
-/* GC Web button styles */
-.gc-button {
-  @apply px-4 py-2 font-semibold rounded;
-  background-color: var(--gc-primary-button);
-  color: white;
-  border: 1px solid var(--gc-primary-button);
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
+/* GC Design System Component Styles */
+
+/* ====== Header Component Styles ====== */
+.gcds-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--background);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+  font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
 }
 
-.gc-button:hover {
-  background-color: var(--gc-blue);
+.gcds-header__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Skip to main content link */
+.gcds-header__skip-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+}
+
+.gcds-header__skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
+
+.gcds-header__skip-link:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 1rem;
+  background: var(--gc-blue);
+  color: white;
+  font-weight: bold;
+  z-index: 999;
+  clip: auto;
+  clip-path: none;
+}
+
+/* Top section styles */
+.gcds-header__top-section {
+  background-color: white;
+  width: 100%;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.gcds-header__top-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Logo styles */
+.gcds-header__logo {
+  display: flex;
+  align-items: center;
+  min-width: 200px;
+}
+
+.gcds-header__logo-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.gcds-header__logo-link:focus {
+  outline: 2px solid var(--gc-blue);
+  outline-offset: 2px;
+}
+
+/* Styling for the Government of Canada signature SVG */
+.gcds-header__logo-img {
+  max-height: 32px;
+  width: auto;
+}
+
+/* Ensure the SVG signature object displays correctly */
+.gcds-header__signature {
+  display: inline-block;
+  line-height: 0;
+}
+
+.gcds-header__signature object {
+  pointer-events: none; /* Prevents clicking through the object */
+  display: block;
+}
+
+/* Actions section (search and language) */
+.gcds-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Search styles */
+.gcds-header__search {
+  display: flex;
+  align-items: center;
+}
+
+.gcds-header__search-form {
+  display: flex;
+  align-items: center;
+}
+
+.gcds-header__search-wrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.gcds-header__search-input {
+  padding: 0.5rem 2.5rem 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  min-width: 200px;
+}
+
+.gcds-header__search-input:focus {
+  outline: 2px solid var(--gc-blue);
+  outline-offset: 1px;
   border-color: var(--gc-blue);
 }
 
-.gc-button-secondary {
-  @apply px-4 py-2 font-semibold rounded;
-  background-color: white;
-  color: var(--gc-primary-button);
-  border: 1px solid var(--gc-primary-button);
+.gcds-header__search-btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
 }
 
-.gc-button-secondary:hover {
-  background-color: var(--gc-footer-bg);
+.gcds-header__search-btn:focus {
+  outline: 2px solid var(--gc-blue);
+  border-radius: 4px;
+}
+
+/* Language toggle styles */
+.gcds-header__lang {
+  display: flex;
+  align-items: center;
+}
+
+.gcds-header__lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--gc-light-blue);
+  cursor: pointer;
+  padding: 0.5rem;
+  font-weight: 600;
+  text-decoration: underline;
+  font-size: 0.875rem;
+}
+
+.gcds-header__lang-btn:hover {
+  color: var(--gc-blue);
+}
+
+.gcds-header__lang-btn:focus {
+  outline: 2px solid var(--gc-blue);
+  outline-offset: 2px;
+}
+
+/* App bar styles */
+.gcds-header__app-bar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background-color: #F5F5F5; /* GC Design System gray background */
+  width: 100%;
+}
+
+.gcds-header__app-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--gc-foreground);
+}
+
+.gcds-header__app-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.gcds-header__app-link:hover {
+  text-decoration: underline;
+}
+
+.gcds-header__app-link:focus {
+  outline: 2px solid var(--gc-blue);
+  outline-offset: 2px;
+}
+
+/* Visually hide but keep accessible for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Responsive adjustments for header */
+@media (max-width: 768px) {
+  .gcds-header__top-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .gcds-header__actions {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .gcds-header__search {
+    width: 100%;
+  }
+  
+  .gcds-header__search-form {
+    width: 100%;
+  }
+  
+  .gcds-header__search-wrapper {
+    width: 100%;
+  }
+  
+  .gcds-header__search-input {
+    width: 100%;
+    min-width: 0;
+  }
+  
+  .gcds-header__lang {
+    margin-top: 0.5rem;
+    align-self: flex-end;
+  }
+}
+
+/* ====== Footer Component Styles ====== */
+
+/* Main footer container */
+.gcds-footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
+  background-color: var(--background);
+  margin-top: 2rem;
+}
+
+/* Contextual band - Application specific band */
+.gcds-footer__contextual-band {
+  background-color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+}
+
+.gcds-footer__contextual-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.gcds-footer__contextual-heading {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+}
+
+.gcds-footer__contextual-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Main band - Full government links */
+.gcds-footer__main-band {
+  background-color: var(--gc-nav-blue);
+  color: white;
+  padding: 2rem 0;
+}
+
+.gcds-footer__main-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gcds-footer__main-link-item {
+  margin-bottom: 0.5rem;
+}
+
+/* Sub band - Required links and wordmark */
+.gcds-footer__sub-band {
+  background-color: var(--gc-blue);
+  color: white;
+  padding: 1.5rem 0;
+}
+
+.gcds-footer__sub-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.gcds-footer__sub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.gcds-footer__modified-date {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 1rem;
+}
+
+.gcds-footer__modified-date dl {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  color: white;
+  font-size: 0.875rem;
+}
+
+/* General link styling */
+.gcds-footer__link {
+  color: white;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  transition: opacity 0.2s ease;
+}
+
+.gcds-footer__link:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+.gcds-footer__link:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* Wordmark styling */
+.gcds-footer__brand {
+  display: flex;
+  align-items: center;
+}
+
+.gcds-footer__wordmark {
+  filter: brightness(0) invert(1);
+  max-height: 2rem;
+  width: auto;
+}
+
+/* Responsive adjustments for footer */
+@media (max-width: 768px) {
+  .gcds-footer__sub-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  
+  .gcds-footer__sub-links {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .gcds-footer__contextual-links {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ====== GC Component Styles ====== */
+
+/* Typography Styles */
+h1 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-6);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-5);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+h3 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+h4 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-3);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+p {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--text-link-hover);
+}
+
+a:visited {
+  color: var(--text-link-visited);
+}
+
+a:focus {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* List Styles */
+ul, ol {
+  padding-left: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+li {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+}
+
+/* GC Web button styles */
+/* Button Styles - Following GC Design System */
+.gc-button {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  font-family: var(--font-primary);
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.5;
+  min-width: 7.5rem;
+  /* Default primary button styling */
+  color: var(--text-inverse);
+  background-color: var(--gc-blue);
+  border: 2px solid var(--gc-blue);
+}
+
+.gc-button:hover,
+.gc-button:focus {
+  background-color: var(--gc-nav-blue);
+  border-color: var(--gc-nav-blue);
+  color: white; /* Ensure text is white on hover */
+  text-decoration: underline;
+  outline: none;
+}
+
+.gc-button:focus {
+  box-shadow: 0 0 0 4px var(--focus-outline);
+  /* Using the bright yellow focus ring from GC Design System */
+}
+
+/* Primary button variant (default) */
+.gc-button-primary {
+  background-color: var(--gc-blue);
+  color: var(--text-inverse);
+  border: 2px solid var(--gc-blue);
+}
+
+.gc-button-primary:hover,
+.gc-button-primary:focus {
+  background-color: var(--gc-nav-blue);
+  border-color: var(--gc-nav-blue);
+}
+
+/* Secondary button variant */
+.gc-button-secondary {
+  background-color: var(--text-inverse);
+  color: var(--gc-blue);
+  border: 2px solid var(--gc-blue);
+}
+
+.gc-button-secondary:hover,
+.gc-button-secondary:focus {
+  background-color: #E1E5E8;
+  color: #16446C;
+  border-color: #16446C;
+}
+
+.gc-button-secondary:focus {
+  box-shadow: 0 0 0 4px var(--focus-outline);
+  /* Using the bright yellow focus ring from GC Design System */
+}
+
+/* Danger/Destructive button variant */
+.gc-button-danger {
+  background-color: var(--text-error);
+  color: var(--text-inverse);
+  border: 2px solid var(--text-error);
+}
+
+.gc-button-danger:hover,
+.gc-button-danger:focus {
+  background-color: #A50C10;
+  border-color: #A50C10;
+}
+
+/* Secondary danger button variant */
+.gc-button-secondary-danger {
+  background-color: var(--text-inverse);
+  color: var(--text-error);
+  border: 2px solid var(--text-error);
+}
+
+.gc-button-secondary-danger:hover,
+.gc-button-secondary-danger:focus {
+  background-color: #FBECEC;
+  color: #A50C10;
+  border-color: #A50C10;
+}
+
+/* Button sizes */
+.gc-button-sm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.gc-button-lg {
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-lg);
+}
+
+/* Full width button on mobile */
+.gc-button-full {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .gc-button-full {
+    width: auto;
+  }
 }
 
 /* GC Skip to main content - accessibility */
