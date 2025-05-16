@@ -32,20 +32,20 @@ export type QuestionType = 'radio' | 'checkbox' | 'text' | 'textarea' | 'select'
 
 /**
  * Assessment areas
- * These correspond to the main sections of the assessment
+ * These correspond to the main sections of the assessment based on the markdown file
  */
 export enum AssessmentArea {
-  GOVERNANCE = 'governance',
-  PLANNING = 'planning',
-  INVESTMENT = 'investment',
+  PROCUREMENT = 'procurement',
+  REAL_PROPERTY = 'real_property',
+  FINANCIAL_MANAGEMENT = 'financial_management',
+  GRANTS_CONTRIBUTIONS = 'grants_contributions',
+  VALUES_ETHICS = 'values_ethics',
+  WORKPLACE_HEALTH = 'workplace_health',
+  PERFORMANCE_MANAGEMENT = 'performance_management',
   SECURITY = 'security',
-  OPERATIONS = 'operations',
-  DATA = 'data',
   SERVICE = 'service',
-  PEOPLE = 'people',
   TECHNOLOGY = 'technology',
-  INTEGRATION = 'integration',
-  COMPLIANCE = 'compliance',
+  DATA = 'data',
 }
 
 /**

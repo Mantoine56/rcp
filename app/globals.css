@@ -684,8 +684,9 @@ li {
 }
 
 .gc-button:focus {
-  box-shadow: 0 0 0 4px var(--focus-outline);
-  /* Using the bright yellow focus ring from GC Design System */
+  box-shadow: 0 0 0 4px var(--gc-accent-blue);
+  /* Using the bright accent blue from GC Design System for better visual feedback */
+  outline: none;
 }
 
 /* Primary button variant (default) */
@@ -718,8 +719,8 @@ li {
 }
 
 .gc-button-secondary:focus {
-  box-shadow: 0 0 0 4px var(--focus-outline);
-  /* Using the bright yellow focus ring from GC Design System */
+  box-shadow: 0 0 0 4px var(--gc-accent-blue);
+  /* Using the bright accent blue from GC Design System for better visual feedback */
   outline: none;
 }
 

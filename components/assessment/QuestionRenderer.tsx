@@ -14,172 +14,163 @@ import RadioQuestion from './RadioQuestion';
 import CheckboxQuestion from './CheckboxQuestion';
 import TextQuestion from './TextQuestion';
 import { useTranslation } from '@/lib/i18n';
+import { QuestionType } from '@/lib/questions';
+import { AssessmentQuestion } from '@/lib/questionBank';
+import { Assignment, User, userStore } from '@/lib/assignments';
 
-// Types for question options
-interface QuestionOption {
+/**
+ * Extended options to support both our simple string options and
+ * the more complex QuestionOption format from the original component
+ */
+type ExtendedOption = string | {
   value: string;
   label: string;
   description?: string;
   flagValue?: number;
   maturityValue?: number;
-}
-
-// Types of questions supported
-type QuestionType = 'radio' | 'checkbox' | 'text' | 'textarea' | 'select';
-
-// Base question interface
-interface Question {
-  id: string;
-  type: QuestionType;
-  text: string;
-  guidance?: string;
-  required: boolean;
-  options?: QuestionOption[];
-  minSelections?: number;
-  maxSelections?: number;
-  maxLength?: number;
-  minLength?: number;
-  placeholder?: string;
-  area: string;
-  flagIf?: string[];
-  flagText?: string;
-}
+};
 
 // Props for the QuestionRenderer component
 interface QuestionRendererProps {
-  question: Question;
+  question: AssessmentQuestion;
   value?: string | string[];
-  onChange: (value: string | string[]) => void;
+  onChange: (id: string, value: any) => void;
   disabled?: boolean;
   className?: string;
+  assignment?: Assignment | null;
 }
 
 /**
  * QuestionRenderer Component
  * Decides which question component to render based on the question type
  */
-const QuestionRenderer = ({
+function QuestionRenderer({
   question,
   value,
   onChange,
   disabled = false,
-  className = ''
-}: QuestionRendererProps) => {
+  className = '',
+  assignment = null
+}: QuestionRendererProps) {
   const { t } = useTranslation();
   
-  /**
-   * Renders the appropriate question component based on question type
-   * @returns ReactNode with the rendered question component
-   */
-  const renderQuestionByType = (): ReactNode => {
-    // Extract common props for all question types
-    const commonProps = {
-      id: question.id,
-      required: question.required,
-      disabled
-    };
+  // Format options to match the expected format for the sub-components
+  const formatOptions = (options?: string[]) => {
+    if (!options) return [];
     
+    return options.map(option => ({
+      value: option,
+      label: option
+    }));
+  };
+  
+  // Get assignee information
+  const getAssigneeInfo = () => {
+    if (!assignment) return null;
+    
+    const assignee = userStore.getUserByEmail(assignment.assignee);
+    if (!assignee) return assignment.assignee;
+    
+    return assignee.name;
+  };
+  
+  // Determine which question component to render based on type
+  const renderQuestionByType = () => {
     switch (question.type) {
       case 'radio':
-        // For radio buttons, we need options and single value handling
-        if (!question.options?.length) {
-          return <div className="text-gc-danger">{t('assessment.missingOptions')}</div>;
-        }
-        
         return (
           <RadioQuestion
-            {...commonProps}
-            options={question.options}
+            id={question.id}
+            options={formatOptions(question.options)}
             value={value as string}
-            onChange={(newValue: string) => onChange(newValue)}
+            onChange={(value) => onChange(question.id, value)}
+            required={question.required}
+            disabled={disabled}
+            // Add the question text and guidance as a wrapper for accessibility
+            aria-label={`${question.number}. ${question.text}`}
           />
         );
         
       case 'checkbox':
-        // For checkboxes, we need options and multi-value handling
-        if (!question.options?.length) {
-          return <div className="text-gc-danger">{t('assessment.missingOptions')}</div>;
-        }
-        
         return (
           <CheckboxQuestion
-            {...commonProps}
-            options={question.options}
-            value={value as string[]}
-            onChange={(newValues: string[]) => onChange(newValues)}
-            minSelections={question.minSelections}
-            maxSelections={question.maxSelections}
-          />
-        );
-        
-      case 'textarea':
-        // For textarea, handle a text area with multiple rows
-        return (
-          <TextQuestion
-            {...commonProps}
-            value={value as string}
-            onChange={(newValue: string) => onChange(newValue)}
-            multiline={true}
-            maxLength={question.maxLength}
-            minLength={question.minLength}
-            placeholder={question.placeholder}
-            hint={question.guidance}
+            id={question.id}
+            options={formatOptions(question.options)}
+            value={Array.isArray(value) ? value : []}
+            onChange={(values) => onChange(question.id, values)}
+            required={question.required}
+            disabled={disabled}
+            // Add the question text and guidance as a wrapper for accessibility
+            aria-label={`${question.number}. ${question.text}`}
           />
         );
         
       case 'text':
-        // For text input, handle a single line of text
+      case 'textarea':
         return (
-          <TextQuestion
-            {...commonProps}
-            value={value as string}
-            onChange={(newValue: string) => onChange(newValue)}
-            multiline={false}
-            maxLength={question.maxLength}
-            minLength={question.minLength}
-            placeholder={question.placeholder}
-            hint={question.guidance}
-          />
+          <div>
+            {/* Add question text and guidance manually */}
+            <div className="mb-2">
+              <h3 className="font-semibold text-lg">{question.number}. {question.text}</h3>
+              {question.guidance && (
+                <p className="text-sm text-gray-600 mt-1">{question.guidance}</p>
+              )}
+            </div>
+            <TextQuestion
+              id={question.id}
+              value={value as string || ''}
+              onChange={(value) => onChange(question.id, value)}
+              required={question.required}
+              multiline={question.type === 'textarea'}
+              disabled={disabled}
+              hint={question.guidance}
+            />
+          </div>
         );
         
       case 'select':
-        // For select, we need options and single value handling
-        // NOTE: Currently rendering as radio buttons until a Select component is created
-        if (!question.options?.length) {
-          return <div className="text-gc-danger">{t('assessment.missingOptions')}</div>;
-        }
-        
+        // Fallback to text input if select is not implemented
         return (
-          <RadioQuestion
-            {...commonProps}
-            options={question.options}
-            value={value as string}
-            onChange={(newValue: string) => onChange(newValue)}
-          />
+          <div>
+            {/* Add question text and guidance manually */}
+            <div className="mb-2">
+              <h3 className="font-semibold text-lg">{question.number}. {question.text}</h3>
+              <p className="text-sm text-gray-600 mt-1">
+                {question.guidance || t('Select not implemented, using text input instead')}
+              </p>
+            </div>
+            <TextQuestion
+              id={question.id}
+              value={value as string || ''}
+              onChange={(value) => onChange(question.id, value)}
+              required={question.required}
+              disabled={disabled}
+              hint={question.guidance}
+            />
+          </div>
         );
         
       default:
-        // Fallback for unknown question types
         return (
-          <div className="text-gc-danger">
-            {t('assessment.unsupportedQuestionType', { type: question.type })}
+          <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-yellow-800">
+              {t('Unknown question type')}: {question.type}
+            </p>
           </div>
         );
     }
   };
   
   return (
-    <div className={`question-renderer ${className}`}>
+    <div className={`mb-8 ${className}`}>
       {renderQuestionByType()}
       
-      {/* 
-        Developer comments:
-        - This component serves as a factory for question rendering
-        - It intelligently selects the appropriate component based on question type
-        - Handles all the prop transformations necessary for each component
-        - Provides fallbacks and error states for edge cases
-        - Follows Canada.ca UI standards across all question types
-      */}
+      {/* Show assignment information if assigned */}
+      {assignment && (
+        <div className="mt-4 text-sm text-gray-600">
+          <span className="font-semibold">Assigned to:</span> {getAssigneeInfo()}
+        </div>
+      )}
     </div>
   );
 };
