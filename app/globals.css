@@ -1,26 +1,152 @@
-@import "tailwindcss";
+/* Import Tailwind */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
+/* Canada.ca UI Theme Tokens - Light Mode */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base colors from Web Experience Toolkit (WET) */
+  --gc-background: #ffffff;
+  --gc-foreground: #333333;
+  --gc-red: #B1001C;
+  --gc-blue: #26374A;
+  --gc-nav-blue: #284162;
+  --gc-light-blue: #335075;
+  --gc-visited-link: #7834BC;
+  --gc-footer-bg: #F8F8F8;
+  --gc-footer-text: #284162;
+  --gc-highlight: #FFFCEA;
+  --gc-success: #278400;
+  --gc-info: #269ABC;
+  --gc-warning: #EE7100;
+  --gc-error: #D3080C;
+  --gc-disabled: #CCCCCC;
+  --gc-primary-accent: #333333;
+  --gc-primary-button: #335075;
+  
+  /* Semantic aliases for easy theme switching */
+  --background: var(--gc-background);
+  --foreground: var(--gc-foreground);
+  --primary: var(--gc-blue);
+  --primary-foreground: white;
+  --secondary: var(--gc-light-blue);
+  --muted: var(--gc-footer-bg);
+  --muted-foreground: var(--gc-footer-text);
+  --accent: var(--gc-highlight);
+  --accent-foreground: var(--gc-foreground);
+  --destructive: var(--gc-error);
+  --destructive-foreground: white;
+  --success: var(--gc-success);
+  --info: var(--gc-info);
+  --warning: var(--gc-warning);
+  --error: var(--gc-error);
+
+  /* Focus rings and borders */
+  --border: #E0E0E0;
+  --input: var(--gc-primary-accent);
+  --ring: var(--gc-blue);
+  
+  /* Standard WET radius values */
+  --radius: 4px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* Canada.ca UI Theme Tokens - Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gc-background: #1E2D42; /* Dark blue background based on GC blue */
+    --gc-foreground: #F8F8F8;
+    --gc-red: #E3213D;        /* Brighter red for dark mode */
+    --gc-highlight: #3A5278;  /* Darker highlight for dark mode */
+    --gc-footer-bg: #26374A;  /* Darker footer for dark mode */
+    --gc-footer-text: #FFFFFF;
+    
+    /* Update semantic aliases for dark mode */
+    --background: var(--gc-background);
+    --foreground: var(--gc-foreground);
+    --muted: var(--gc-footer-bg);
+    --muted-foreground: var(--gc-footer-text);
+    --accent: var(--gc-highlight);
+    --accent-foreground: white;
+    
+    /* Adjusted borders for dark mode */
+    --border: #3A5278;
   }
 }
 
+/* Base styles */
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Canada.ca link styling */
+a {
+  color: var(--gc-light-blue);
+  text-decoration: underline;
+  transition: color 0.15s ease-in-out;
+}
+
+a:hover {
+  color: var(--gc-blue);
+}
+
+a:visited {
+  color: var(--gc-visited-link);
+}
+
+/* GC Web button styles */
+.gc-button {
+  @apply px-4 py-2 font-semibold rounded;
+  background-color: var(--gc-primary-button);
+  color: white;
+  border: 1px solid var(--gc-primary-button);
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.gc-button:hover {
+  background-color: var(--gc-blue);
+  border-color: var(--gc-blue);
+}
+
+.gc-button-secondary {
+  @apply px-4 py-2 font-semibold rounded;
+  background-color: white;
+  color: var(--gc-primary-button);
+  border: 1px solid var(--gc-primary-button);
+}
+
+.gc-button-secondary:hover {
+  background-color: var(--gc-footer-bg);
+}
+
+/* GC Skip to main content - accessibility */
+.gc-skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.gc-skip-link:focus {
+  width: auto;
+  height: auto;
+  clip: auto;
+  margin: 10px;
+  z-index: 100;
+  padding: 15px;
+  background: var(--gc-blue);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
 }
